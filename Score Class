@@ -1,0 +1,62 @@
+import greenfoot.*;  
+public class Score extends Actor
+{
+  //initializing the instance variables
+    private int value = 0;
+    private int target = 0;
+    private String text;
+    private int stringLength;
+
+    public Score()
+    {
+        this("");
+    }
+
+    public Score(String prefix)
+    {
+        text = prefix;
+        stringLength = (text.length() + 2) * 14;
+        setImage(new GreenfootImage(stringLength, 24));//at the end of the game
+        GreenfootImage image = getImage();
+        Font font = image.getFont();
+        image.setFont(font.deriveFont(22.0F)); 
+        image.setColor(Color.WHITE);//Can be set to  any color
+        updateImage(); //at the end depending on your outcome
+    }
+    
+    public void act() 
+      {
+        if(value < target) 
+       {
+            value++;
+            updateImage();
+        }
+        else if(value > target)
+       {
+            value--;
+            updateImage();
+        }
+    }
+
+    public void add(int score)
+    {
+        target += score; //adding the scores after each missile
+    }
+
+    public void subtract(int score)
+    {
+        target -= score; //getting the value of the score
+    }
+
+    public int getValue()
+    {
+        return value; //returning the value
+    }
+
+    private void updateImage()
+    {
+        GreenfootImage image = getImage();
+        image.clear();
+        image.drawString(text + value, 1, 18);
+    }
+}
