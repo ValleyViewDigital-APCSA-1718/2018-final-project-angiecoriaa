@@ -1,0 +1,33 @@
+import greenfoot.*; 
+//instance variables
+public class Enemy extends Actor
+{
+  //setting the images
+    private GreenfootImage img1;
+    public Enemy() 
+    {
+        img1 = getImage(); 
+    }
+    
+    public void act() 
+    {
+      int y = getY();
+      y = y+1;
+      setLocation(getX(), y);
+       
+      if (getY() + 5 == getWorld().getHeight()) 
+     {
+          destroy();
+      }
+      if (getImage() == img1) 
+       {
+          setImage(img1);
+      }
+    }    
+    
+    private void destroy()
+    //if it touches then it will be vanished
+   {
+        getWorld().removeObject(this);
+    }   
+}
