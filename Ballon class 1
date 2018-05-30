@@ -1,0 +1,174 @@
+import greenfoot.*; 
+import java.util.*; 
+public class Balloon1 extends Actor
+{
+  public int dir = 1; 
+  public int movetimer = 0; 
+  public int shouldMove = 0; 
+  public int shouldCar = 0;
+  public GreenfootImage img1; 
+  public int shoot; 
+  public int chance = 1; 
+    
+   
+
+ public Balloon1() 
+    {
+     //setting the image
+        img1 = getImage(); 
+    }
+    
+    public void act() 
+    {
+       List bullets = getNeighbours(3, false, Missile.class); 
+       if (!bullets.isEmpty()) 
+       { 
+            Actor b = (Actor) bullets.get(0); 
+         if (b instanceof Missile)
+         { 
+           ((MyWorld) getWorld()).ShootSet(1); 
+           getWorld().removeObject(b); 
+           destroy(); 
+         }
+       } 
+       else 
+       {
+           shoot();
+           move();    
+       }
+    }
+    
+    public void destroy() 
+    {
+        ((MyWorld) getWorld()).addPoints(5); 
+        ((MyWorld) getWorld()).invaders--;
+         if (((MyWorld)getWorld()).invaders <= 0)
+         {
+            ((MyWorld) getWorld()).populate();
+            ((MyWorld)getWorld()).invaders = 50;
+         }
+        getWorld().removeObject(this);
+    }
+    
+    public void shoot()
+    {
+        if (shouldMove == 1) 
+            {
+            shoot = Greenfoot.getRandomNumber(100);
+            if (shoot <= chance) 
+            //else if statements for the balloons and setting the location 
+            {
+                getWorld().addObject(new Enemy(), getX(), getY()+5);
+            }
+        }
+    }
+        
+        
+    
+    public void move() //move function, called in step
+    {
+        if (dir == 1 && shouldCar == 1) 
+          {
+            if (getX() + 5 >= getWorld().getWidth()) 
+            { 
+                carridgeRight(); 
+                carridgeAlliesRight(); 
+            }
+        } 
+        else if (dir == 2 && shouldCar == 1)
+        {
+             if (getX() - 5 <= 0)
+             {
+                carridgeLeft();
+                carridgeAlliesLeft();
+              }
+        }
+        
+        if (dir == 1 && shouldMove == 1)
+        {
+            if (getImage() == img1) 
+            {
+                setImage(img1);
+            }
+            setLocation(getX()+5, getY()); 
+            shouldMove = 0; 
+        } 
+        else if 
+        (dir == 2 && shouldMove == 1) 
+        {
+            if (getImage() == img1)
+            {
+                setImage(img1);
+            }
+            setLocation(getX()-5, getY()); 
+            shouldMove = 0;
+        }
+        else if (shouldMove == 0) 
+        { 
+            movetimer++; 
+            if (movetimer == 24)
+            {
+                shouldCar = 1; 
+            }
+            else if (movetimer == 25)
+            {
+                shouldMove = 1; 
+                shouldCar = 0; 
+                movetimer = 0;
+            }
+        }
+    }
+    
+    private void carridgeRight() 
+    {
+        setLocation(getX(), getY() + 5); 
+        dir = 2;
+        chance = chance+1; 
+        if (getY() > 60) {
+            ((MyWorld) getWorld()).gameOver();
+        }
+    }
+    
+    private void carridgeLeft()
+    {
+        setLocation(getX(), getY() + 5);
+        dir = 1;
+        chance = chance+1;
+    }
+    
+    private void carridgeAlliesRight()
+    {
+        List allies = getWorld().getObjects(Balloon1.class);
+        Iterator i = allies.iterator();
+        while(i.hasNext()) 
+        {
+            Balloon1 a = (Balloon1) i.next();
+            if ( a != this) 
+            {
+                a.carridgeRight();
+                a.setLocation(a.getX(), a.getY());
+                if (getImage() != a.getImage())
+                {
+                    setImage(a.getImage());
+                }
+            }
+        }
+    }
+    
+    private void carridgeAlliesLeft()
+    {
+        List allies = getWorld().getObjects(Balloon1.class);
+        Iterator i = allies.iterator();
+        while(i.hasNext()) {
+            Balloon1 a = (Balloon1) i.next();
+            if ( a != this) {
+                a.carridgeLeft();
+                a.setLocation(a.getX(), a.getY());
+                if (getImage() != a.getImage())
+                {
+                    setImage(a.getImage());
+                }
+            }
+        }
+    }
+}
