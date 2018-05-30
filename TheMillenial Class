@@ -1,0 +1,60 @@
+import greenfoot.*;  
+import java.util.*; 
+
+//adding the variables
+public class TheMillenial  extends Actor
+{
+   private int ShootTimer = 0;
+    
+   public TheMillenial()
+   //getting theMillenial to switch angles
+    {
+       setRotation(270);
+    }
+   public void act() 
+    {
+       List bullets = getNeighbours(3, false, Enemy.class);
+       if (!bullets.isEmpty()) 
+       { 
+           Actor b = (Actor) bullets.get(0);
+          if (b instanceof Enemy) 
+          {
+           getWorld().removeObject(b); 
+           destroy();
+          }
+       } 
+       else 
+       {
+        processKeys();
+       }
+    }    
+   
+   private void processKeys()
+//key instructions
+ {
+        int x = getX();
+        if(Greenfoot.isKeyDown("right"))
+        {
+            x = x+1;
+            setLocation(x, getY());
+        }
+        if(Greenfoot.isKeyDown("left")) 
+        {
+            x = x-1;
+            setLocation(x, getY());
+        }
+        if (Greenfoot.isKeyDown("space") && ((MyWorld) getWorld()).CanShoot()) 
+        {
+            getWorld().addObject(new Missile(), getX(), getY()-5);
+            ((MyWorld) getWorld()).ShootSet(0);
+        }   
+    }
+
+//getting rid of the object when touching
+   private void destroy() 
+    {
+        getWorld().addObject(new Rocket(), getX(), getY());
+        ((MyWorld) getWorld()).ShootSet(0);
+        getWorld().removeObject(this);
+    }
+}
