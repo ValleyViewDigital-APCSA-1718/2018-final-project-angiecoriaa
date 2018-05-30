@@ -9,3 +9,10 @@ time that the balloon gets to the edge of the screen they will lower a level. If
 will be killed another way that you can also hey killed is when the balloons fires back if the firearm touch you will lose a life.
 If it continues to touch you then  you will lose all of your life’s and on the screen Game Over will pop up on the screen. 
 
+
+
+
+Instructions
+Left key arrow = move the rocket left
+Right key arrow = move the recket right
+Space bar = shoot the missile
