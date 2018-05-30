@@ -1,0 +1,24 @@
+import greenfoot.*;  
+
+public class Missile extends Actor
+{
+//setting the location
+    private TheMillenial rocket;
+    public void act() 
+    {
+       int y = getY();
+       y = y-2;
+       setLocation(getX(), y);
+       
+       if (getY() == 0) 
+       {
+           destroy();
+        }
+    }    
+    
+    private void destroy() 
+    {
+        ((MyWorld) getWorld()).ShootSet(1);
+        getWorld().removeObject(this);
+    }
+}
