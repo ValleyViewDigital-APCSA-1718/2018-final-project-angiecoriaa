@@ -1,0 +1,34 @@
+import greenfoot.*;
+
+
+public class Rocket extends Actor
+{
+    //instance variables
+    private int deathtimer = 0; 
+    private GreenfootImage img1; 
+    
+    public Rocket() 
+    //calling the method
+    {
+        img1 = getImage(); 
+    }
+     //ifelse statements for the images
+
+    public void act() 
+    {
+        deathtimer++;
+        if (deathtimer > 20)
+      {
+            ((MyWorld) getWorld()).die();
+            getWorld().removeObject(this);
+        }
+             else
+           {
+            if (getImage() == img1)
+            {
+                setImage(img1);
+            }
+        }
+            
+    }    
+}
