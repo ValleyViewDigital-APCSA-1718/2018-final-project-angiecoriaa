@@ -1,0 +1,11 @@
+import greenfoot.*;  
+import java.util.*;
+
+public class Balloon2  extends Balloon1
+{
+    public Balloon2() 
+//setting the image
+    {
+        img1 = getImage(); 
+    }   
+}
