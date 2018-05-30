@@ -1,0 +1,92 @@
+import greenfoot.*;  
+import java.util.*;
+
+public class MyWorld  extends World
+{
+   //getting the values
+    public int shot = 1;
+    public int invaders = 50;
+    Score score = new Score("Score: ");
+    Score lives = new Score("Lives: ");
+    
+    public MyWorld()
+    {    
+        // Adding the object to MyWorld
+        super(100, 100, 5); 
+        addObject(new TheMillenial(), 50, 90);
+        addObject(score, 15, 90);
+        addObject(lives, 95, 90);
+        lives.add(3);
+        populate();
+    }
+    
+    public void ShootSet(int arg)
+    {
+        shot = arg;
+    }
+    
+    //getting the object to shoot
+  public boolean CanShoot()
+    {
+        if (shot == 1)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void addPoints(int pts)
+    {
+        score.add(pts);
+    }
+    
+//getting the values to 0 == die  
+  public void die()
+    {
+        lives.subtract(1);
+        if (lives.getValue() == 0) 
+        {
+            gameOver();
+        }
+         
+        addObject(new TheMillenial(), 50, 90);
+        shot = 1;
+    }
+    
+    public void gameOver() 
+    {
+        addObject(new ScoreBoard(score.getValue()), getWidth()/2, getHeight()/2);
+        Greenfoot.stop();
+    }
+    
+    public void populate()
+//adding the ballloons(four lines)
+    {
+       Balloon1[] balloon1 = new Balloon1[10];
+        for ( int i = 0; i <10; i++ ) 
+          {
+            balloon1[i] = new Balloon1();
+            addObject(balloon1[i], (i*5)+20, 7);
+          }
+        
+       Balloon2[] balloon2 = new Balloon2[21];
+        for ( int i = 0; i <10; i++ )
+         {
+            balloon2[i] = new Balloon2();
+            addObject(balloon2[i], (i*5)+20, 14);
+        }
+        
+       for ( int i = 11; i <21; i++ ) 
+       {
+            balloon2[i] = new Balloon2();
+            addObject(balloon2[i], ((i*5)+20)-55, 21);
+        } 
+  
+       for ( int i = 11; i <21; i++ )
+ {
+            balloon2[i] = new Balloon2();
+            addObject(balloon2[i], ((i*5)+20)-55, 28);
+        } 
+    }
+}
