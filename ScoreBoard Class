@@ -1,0 +1,25 @@
+
+import greenfoot.*;  
+public class ScoreBoard extends Actor
+{
+    public ScoreBoard()
+    {
+        this(100);
+    }
+
+    public ScoreBoard(int score)
+    {
+        makeImage("Game Over", "Score: ", score); //output on the screen
+    }
+    
+    private void makeImage(String title, String prefix, int score)
+    {
+        GreenfootImage image = new GreenfootImage(400, 300);
+        Font font = image.getFont();
+        font = font.deriveFont(60);
+        image.setFont(font);
+        image.setColor(Color.WHITE);
+        image.drawString(title, 20, 100);
+        setImage(image);
+    }
+}
